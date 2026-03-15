@@ -19,8 +19,8 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 model = RandomForestRegressor(
-    n_estimators=50,
-    max_depth=10,
+    n_estimators=100,
+    max_depth=15,
     random_state=42
 )
 
@@ -49,10 +49,10 @@ if "GITHUB_STEP_SUMMARY" in os.environ:
 Name: Tanishq Singh  
 Roll No: bcs183  
 
-Experiment: EXP3  
+Experiment: EXP4  
 Model: Random Forest  
-Trees: 50  
-Max Depth: 10  
+Trees: 100  
+Max Depth: 15  
 
 MSE: {mse}  
 R2 Score: {r2}
