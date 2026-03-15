@@ -1,12 +1,14 @@
-import pandas as pd
+import os
 import json
 import pickle
+import pandas as pd
+
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
-import os 
 
-os.makedirs("output", exist_ok=True) 
+# create output directory
+os.makedirs("output", exist_ok=True)
 
 # load dataset
 df = pd.read_csv("dataset/winequality-red.csv", sep=";")
@@ -19,11 +21,11 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# model
+# train model
 model = LinearRegression()
 model.fit(X_train, y_train)
 
-# prediction
+# predictions
 pred = model.predict(X_test)
 
 mse = mean_squared_error(y_test, pred)
@@ -42,18 +44,21 @@ results = {
     "R2": r2
 }
 
-with open("output/results.json") as f:
-    data = json.load(f)
+with open("output/results.json", "w") as f:
+    json.dump(results, f)
 
-summary = f"""
+# write GitHub summary
+import os
+
+if "GITHUB_STEP_SUMMARY" in os.environ:
+    summary = f"""
 ## ML Experiment Results
 
 Name: Tanishq Singh  
 Roll No: bcs183  
 
-MSE: {data['MSE']}
-R2 Score: {data['R2']}
+MSE: {mse}
+R2 Score: {r2}
 """
-
-with open(os.environ['GITHUB_STEP_SUMMARY'], 'w') as f:
-    f.write(summary)
+    with open(os.environ["GITHUB_STEP_SUMMARY"], "w") as f:
+        f.write(summary)
