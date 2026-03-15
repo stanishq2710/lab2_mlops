@@ -4,6 +4,9 @@ import pickle
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, r2_score
+import os 
+
+os.makedirs("output", exist_ok=True) 
 
 # load dataset
 df = pd.read_csv("dataset/winequality-red.csv", sep=";")
